@@ -14,6 +14,7 @@
 
 
 			<div class=" col-md-4 col-md-offset-4 well">
+				<h4> Create your shopping items</h4>
 
 				<input type="text" id="enterItem" class="form-control"></input>
 				<br/><button id="Add" class="btn btn-default pull-right">Add</button>
@@ -48,8 +49,8 @@
 
 			switch(action.type) {
 				case 'ADD_ITEM':
-					var array = [];
-					array.push(state);
+					var array = state.slice();
+					//array.push(state);
 					array.push(action.text);
 					return array; // See that the state is not modified.
 
@@ -62,8 +63,15 @@
 
 		//Render function for displaying the current store state
 		function render() {
-			document.getElementById("list").innerHTML =
-				store.getState().toString();
+			var items = store.getState();
+			console.log(items);
+
+			htmlList = items.reduce(function(prev, item) {
+				return prev + "<li>" + item + "</li>";
+				}, "");
+
+			document.getElementById("list").innerHTML = htmlList;
+
 			}
 
 		//Initial render
