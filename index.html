@@ -35,10 +35,15 @@
 		<script>
 		// Define a constant for the type of action
 		var ADD_ITEM = 'ADD_ITEM';
+		var REMOVE_ITEM = 'REMOVE_ITEM';
 
 		// Define what the action will need i.e. its paylod
 		function addItem(text){
 			return {type: ADD_ITEM, text}
+		}
+
+		function removeItem(index) {
+			return {type: REMOVE_ITEM, index}
 		}
 
 		// reducer function to use the object returned by addItem
@@ -48,30 +53,33 @@
 			}
 
 			switch(action.type) {
-				case 'ADD_ITEM':
-					var array = state.slice();
-					//array.push(state);
-					array.push(action.text);
-					return array; // See that the state is not modified.
+				case ADD_ITEM:
+					var addedArray = state.slice();
+					addedArray.push(action.text);
+					return addedArray; // See that the state is not modified.
+
+				case REMOVE_ITEM:
+					var removedArray = state.filter(function(value, index){
+							if (index==action.index) return false;
+							else return true;
+						});
+					return removedArray;
 
 				default:
 					return state
 			}
 		}
 
+		//Creating the Redux store
 		var store = Redux.createStore(listItem);
 
 		//Render function for displaying the current store state
 		function render() {
 			var items = store.getState();
-			console.log(items);
-
-			htmlList = items.reduce(function(prev, item) {
-				return prev + "<li>" + item + "</li>";
+			htmlList = items.reduce(function(prev, item, index) {
+				return prev + "<li onclick=removefromList("+index+")>" + item + "</li>";
 				}, "");
-
 			document.getElementById("list").innerHTML = htmlList;
-
 			}
 
 		//Initial render
@@ -89,6 +97,10 @@
 					document.getElementById('enterItem').value = '';
 
 				});
+
+			function removefromList(index) {
+				store.dispatch(removeItem(index));
+				}
 
 		</script>
 
