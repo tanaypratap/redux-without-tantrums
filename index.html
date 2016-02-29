@@ -40,6 +40,25 @@
 			return {type: ADD_ITEM, text}
 		}
 
+		// reducer function to use the object returned by addItem
+		function listItem(state, action) {
+			if (typeof state === 'undefined') {
+				return []
+			}
+
+			switch(action.type) {
+				case 'ADD_ITEM':
+					new array = [];
+					array.push(state);
+					array.push(action.text);
+					return array; // See that the state is not modified.
+
+				default:
+					return state
+			}
+		}
+
+
 		//Previous code as is
 			document.getElementById('Add')
 				.addEventListener('click', function() {
