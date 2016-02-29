@@ -32,6 +32,15 @@
 		</div>
 
 		<script>
+		// Define a constant for the type of action
+		var ADD_ITEM = 'ADD_ITEM';
+
+		// Define what the action will need i.e. its paylod
+		function addItem(text){
+			return {type: ADD_ITEM, text}
+		}
+
+		//Previous code as is
 			document.getElementById('Add')
 				.addEventListener('click', function() {
 
