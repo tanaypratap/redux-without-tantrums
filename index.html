@@ -48,7 +48,7 @@
 
 			switch(action.type) {
 				case 'ADD_ITEM':
-					new array = [];
+					var array = [];
 					array.push(state);
 					array.push(action.text);
 					return array; // See that the state is not modified.
@@ -58,17 +58,28 @@
 			}
 		}
 
+		var store = Redux.createStore(listItem);
 
-		//Previous code as is
+		//Render function for displaying the current store state
+		function render() {
+			document.getElementById("list").innerHTML =
+				store.getState().toString();
+			}
+
+		//Initial render
+		render();
+
+		//Subscribing the changes to store, calling render on store change
+		store.subscribe(render);
+
+		//Changing previous code to dispatch actions on click
+		// instead of changing the value itself
 			document.getElementById('Add')
 				.addEventListener('click', function() {
-
-					var addedItem = document.getElementById('enterItem').value;
-
+					var text = document.getElementById('enterItem').value;
+					store.dispatch(addItem(text));
 					document.getElementById('enterItem').value = '';
 
-					document.getElementById("list").innerHTML +=
-						"<li>" + addedItem + "</li>";
 				});
 
 		</script>
