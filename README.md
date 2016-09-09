@@ -57,7 +57,7 @@ It uses bootstrap for some styling. The final app after these five steps looks l
  - Add async operations
  - Syntax improvement of React
  - Use dispatch and connect with React
- - Add Night Mode
+
 
 License
 ----
